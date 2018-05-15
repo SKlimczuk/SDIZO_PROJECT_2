@@ -7,8 +7,94 @@
 //
 
 #include <iostream>
+#include <cstdlib>
+#include <fstream>
+
+#include "Matrix.hpp"
+#include "List.hpp"
+
 
 int main(int argc, const char * argv[]) {
     
+    srand(time(NULL));
+    
+    Matrix *matrix;
+    //List *list = new List();
+    int menu;
+    bool menu_cond = true;
+    string filename;
+    
+    do
+    {
+        cout << "---- MENU ----" << endl;
+        cout << "1 -> LISTA\n2 -> MACIERZ INCYDENCJI\n0 -> WYJSCIE" << endl;
+        cout << "WYBOR : ";
+        cin >> menu;
+        switch (menu) {
+            case 1:
+                cout << "---- LISTA ----" << endl;
+                cout << "1 -> wczytaj z pliku\n2 -> generuj losowo\n3 -> wyswietl" << endl;
+                cout << "WYBOR : ";
+                cin >> menu;
+                switch (menu) {
+                    case 1:
+                        cout << "podaj nazwe pliku : ";
+                        cin >> filename;
+                        filename += ".txt";
+                        break;
+                    case 2:
+                        
+                        break;
+                    case 3:
+                        
+                        break;
+                        
+                    default:
+                        break;
+                }
+                break;
+            case 2:
+                cout << "---- MACIERZ INCYDECJI ----" << endl;
+                cout << "1 -> wczytaj z pliku\n2 -> generuj losowo\n3 -> wyswietl" << endl;
+                cout << "WYBOR : ";
+                cin >> menu;
+                switch (menu) {
+                    case 1:
+                        //wczytywanie z pliku
+                        cout << "podaj nazwe pliku : ";
+                        cin >> filename;
+                        filename += ".txt";
+                        matrix = new Matrix(filename);
+                        break;
+                    case 2:
+                        //generowanie losowych danych
+                        break;
+                    case 3:
+                        //wyswietlanie macierzy incydencji
+                        cout << "elo ziomek ";
+                        matrix->printMatrix();
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case 0:
+                cout << "KONIEC" << endl;
+                menu_cond = false;
+                break;
+            default:
+                break;
+        }
+    }while (menu_cond);
+    
     return 0;
 }
+
+
+/*
+-------WYMAGANIA------------------------------------------------------------
+ 1. REPREZENTACJA -> macierz incydencji, lista następników/poprzedników
+ 2. ALGORYTMY -> prim/kruskal, belman/dijkstry
+ ---------------
+ 
+*/
