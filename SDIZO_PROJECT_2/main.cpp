@@ -19,7 +19,8 @@ int main(int argc, const char * argv[]) {
     srand(time(NULL));
     
     Matrix *matrix;
-    //List *list = new List();
+    List *list;
+    
     int menu;
     bool menu_cond = true;
     string filename;
@@ -38,15 +39,18 @@ int main(int argc, const char * argv[]) {
                 cin >> menu;
                 switch (menu) {
                     case 1:
+                        //wczytywanie danych z pliku
                         cout << "podaj nazwe pliku : ";
                         cin >> filename;
                         filename += ".txt";
+                        list = new List(filename);
                         break;
                     case 2:
                         
                         break;
                     case 3:
-                        
+                        //wyswietlanie listy sąsiedztwa
+                        list->printList();
                         break;
                         
                     default:
@@ -71,7 +75,6 @@ int main(int argc, const char * argv[]) {
                         break;
                     case 3:
                         //wyswietlanie macierzy incydencji
-                        cout << "elo ziomek ";
                         matrix->printMatrix();
                         break;
                     default:

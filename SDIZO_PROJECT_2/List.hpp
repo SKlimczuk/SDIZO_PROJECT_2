@@ -10,11 +10,17 @@
 #define List_hpp
 
 #include <stdio.h>
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <iomanip>
+
+using namespace std;
 
 struct ListElement
 {
-    int *next;
-    int data;
+    ListElement *next;
+    int vertex;
 };
 
 class List
@@ -22,8 +28,14 @@ class List
 private:
     int vertexes;
     int edges;
+    ListElement *element;
+    ListElement **list_array;
+    
 public:
+    List(string filename);
     List(int v, int e);
+    ~List();
+    void printList();
 };
 
 #endif /* List_hpp */
