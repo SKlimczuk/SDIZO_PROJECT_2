@@ -21,6 +21,7 @@ struct ListElement
 {
     ListElement *next;
     int vertex;
+    int weight;
 };
 
 class List
@@ -36,6 +37,8 @@ public:
     List(int v, int e);
     ~List();
     void printList();
+    void dijkstry(int start_vertex);
+    bool findVertex(int vertex_to_find);
 };
 
 #endif /* List_hpp */

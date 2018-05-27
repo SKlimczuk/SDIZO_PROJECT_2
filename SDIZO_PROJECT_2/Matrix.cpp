@@ -55,31 +55,11 @@ Matrix::Matrix(int v, int e)
             matrix_array[i][k] = 0;
 }
 
-bool Matrix::readFromFile(string filename)
+Matrix::~Matrix()
 {
-    ifstream file;
-    file.open(filename.c_str());
-    
-    if(!file.good())
-    {
-        cout << "Plik nie zostal otwarty poprawnie !" << endl;
-        return false;
-    }
-    else
-    {
-         cout << "Plik zostal otwarty poprawnie !" << endl;
-        file >> edges >> vertexes;
-        
-        for(int i=0;i<edges;i++)
-        {
-            int start_vertex;
-            int end_vertex;
-            file >> start_vertex >> end_vertex;
-            matrix_array[start_vertex][end_vertex];
-        }
-        file.close();
-    }    
-    return true;
+    for(int i = 0; i < vertexes; i++)
+        delete [] matrix_array[i];
+    delete [] matrix_array;
 }
 
 void Matrix::printMatrix()
@@ -99,4 +79,21 @@ void Matrix::printMatrix()
             cout << setw(4) << matrix_array[i][k];
         cout << endl;
     }
+}
+
+void Matrix::dijkstry(int start_vertex)
+{
+    int *cost_array = new int[vertexes];
+    int *prev_array = new int[vertexes];
+    int *stack_array = new int[vertexes];
+    int sptr = 0;
+    bool *QS_array = new bool[vertexes];
+    //MatrixElement *temp;
+    
+    
+    
+    delete[] prev_array;
+    delete[] cost_array;
+    delete[] QS_array;
+    delete[] stack_array;
 }

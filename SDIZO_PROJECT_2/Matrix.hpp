@@ -24,15 +24,14 @@ private:
     int edges;
     int weight;
     int ** matrix_array;
+    int *weight_array;
     
 public:
     Matrix(string filename);
     Matrix(int v, int e);
     ~Matrix();
-    
-    bool readFromFile(string filename);
     void printMatrix();
-    
+    void dijkstry(int start_vertex);
 };
 
 #endif /* Matrix_hpp */
