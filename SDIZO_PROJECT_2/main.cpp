@@ -70,8 +70,8 @@ int main(int argc, const char * argv[]) {
                                 cout << "wierzcholek nie nalezy do grafu" << endl;
                             break;
                         case 5:
-                            //alg 2
-                            
+                            //kruskal
+                            list->kruskal();
                             break;
                         case 0:
                             //powrot
@@ -107,8 +107,11 @@ int main(int argc, const char * argv[]) {
                             matrix->printMatrix();
                             break;
                         case 4:
-                            //alg 1
-                            
+                            //dijkstry
+                            //int start_vertex;
+                            //cout << "podaj wierzcholek startowy ";
+                            //cin >> start_vertex;
+                            matrix->dijkstry(0);
                             break;
                         case 5:
                             //alg 2

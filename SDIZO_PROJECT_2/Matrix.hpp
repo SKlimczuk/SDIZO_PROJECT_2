@@ -24,7 +24,6 @@ private:
     int edges;
     int weight;
     int ** matrix_array;
-    int *weight_array;
     
 public:
     Matrix(string filename);

@@ -19,10 +19,11 @@ List::List(string filename)
     {
         cout << "Plik zostal poprawnie otwarty" << endl;
         file >> this->edges >> this->vertexes;
-        this->list_array = new ListElement*[vertexes];
+        this->list_array_dir = new ListElement*[vertexes];
+        this->list_array_undir = new ListElement*[vertexes];
         
         for(int i=0; i<vertexes; i++)
-            list_array[i] = NULL;
+            list_array_dir[i] = NULL;
         
         for(int i=0; i<edges; i++)
         {
@@ -31,8 +32,8 @@ List::List(string filename)
             element = new ListElement;
             element->weight = weight_edge;
             element->vertex = end_vertex;
-            element->next = list_array[start_vertex];
-            list_array[start_vertex] = element;
+            element->next = list_array_dir[start_vertex];
+            list_array_dir[start_vertex] = element;
         }
         
         file.close();
@@ -47,7 +48,7 @@ List::~List()
     ListElement *temp1, *temp2;
     for(int i = 0; i < vertexes; i++)
     {
-        temp1 = list_array[i];
+        temp1 = list_array_dir[i];
         while(temp1)
         {
             temp2 = temp1;
@@ -55,7 +56,7 @@ List::~List()
             delete temp2;
         }
     }
-    delete[] list_array;
+    delete[] list_array_dir;
 }
 
 void List::printList()
@@ -63,7 +64,7 @@ void List::printList()
     for(int i=0; i<vertexes; i++)
     {
         cout << i << " -> ";
-        element = list_array[i];
+        element = list_array_dir[i];
         while (element)
         {
             cout << setw(4) << element->vertex << "(" << element -> weight << ")";
@@ -102,13 +103,14 @@ void List::dijkstry(int start_vertex)
         
         QS_array[u] = true;
         
-        for(temp = list_array[u]; temp; temp=temp->next)
+        for(temp = list_array_dir[u]; temp; temp=temp->next)
             if(!QS_array[temp->vertex] && (cost_array[temp->vertex] > cost_array[u] + temp->weight))
             {
                 cost_array[temp->vertex] = cost_array[u] + temp->weight;
                 prev_array[temp->vertex] = u;
             }
     }
+    
     //wyswietlanie wynikow
     for(int i=0; i<vertexes;i++)
     {
@@ -129,11 +131,35 @@ void List::dijkstry(int start_vertex)
     delete[] stack_array;
 }
 
+void List::kruskal()
+{
+    vector<Edge> edges_vec;
+    for(int i=0; i<vertexes; i++)
+    {
+        auto temp_element = list_array_dir[i];
+        while(temp_element)
+        {
+            Edge e;
+            e.v1= i;
+            e.v2 = temp_element->vertex;
+            e.weight = temp_element-> weight;
+            edges_vec.push_back(e);
+            temp_element = temp_element->next;
+        }
+    }
+    
+    //sort(edges_vec.begin(), edges_vec.end());
+    
+    for(int i=0;i<edges_vec.size();i++)
+        cout << edges_vec[i].v1 << " " << edges_vec[i].v2 << " " << edges_vec[i].weight << endl;
+    
+}
+
 bool List::findVertex(int vertex_to_find)
 {
     for(int i=0; i<vertexes; i++)
     {
-        auto temp_element = list_array[i];
+        auto temp_element = list_array_dir[i];
         while(temp_element)
         {
             if(temp_element->vertex == vertex_to_find)

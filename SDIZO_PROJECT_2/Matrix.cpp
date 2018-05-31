@@ -34,7 +34,7 @@ Matrix::Matrix(string filename)
             int end_vertex;
             int weight_edge;
             file >> start_vertex >> end_vertex >> weight_edge;
-            matrix_array[start_vertex][i] = 1;
+            matrix_array[start_vertex][i] = weight_edge;
             matrix_array[end_vertex][i] = -1;
         }
         file.close();
@@ -88,9 +88,60 @@ void Matrix::dijkstry(int start_vertex)
     int *stack_array = new int[vertexes];
     int sptr = 0;
     bool *QS_array = new bool[vertexes];
-    //MatrixElement *temp;
+    int *temp;
     
+    int u, j;
     
+    for(int i=0; i<vertexes; i++)
+    {
+        cost_array[i] = 1000000;
+        prev_array[i] = -1;
+        QS_array[i] = false;
+    }
+    
+    cost_array[start_vertex] = 0;
+    for(int i=0; i<vertexes; i++)
+    {
+        for(u=0; QS_array[u]; u++);
+        for(j=u++; j<vertexes; j++)
+            if(!QS_array[j] && (cost_array[j] < cost_array[u]))
+                u = j;
+        
+        QS_array[u] = true;
+        /*
+        for(temp = list_array_dir[u]; temp; temp=temp->next)
+            if(!QS_array[temp->vertex] && (cost_array[temp->vertex] > cost_array[u] + temp->weight))
+            {
+                cost_array[temp->vertex] = cost_array[u] + temp->weight;
+                prev_array[temp->vertex] = u;
+            }*/
+        for(int i=0; i<edges; i++)
+            if(matrix_array[u][i] > 0)
+                for(int k=0; k<vertexes; k++)
+                    if(matrix_array[k][i] == (-1))
+                    {
+                        //teraz krawedz wyglada nastepujaco: (u)->(k) waga(i,k)=matrix_array[u][i]
+                        if(!QS_array[k] && (cost_array[k] > cost_array[u] + matrix_array[u][i]))
+                        {
+                            cost_array[k] = cost_array[u] + matrix_array[u][i];
+                            prev_array[k] = u;
+                        }
+                    }
+    }
+    
+    //wyswietlanie wynikow
+    for(int i=0; i<vertexes;i++)
+    {
+        cout << i << " : ";
+        
+        for(int j = i; j > -1; j=prev_array[j])
+            stack_array[sptr++] = j;
+        
+        while(sptr)
+            cout << stack_array[--sptr] << " ";
+        
+        cout << "$(" << cost_array[i] << ")" << endl;
+    }
     
     delete[] prev_array;
     delete[] cost_array;

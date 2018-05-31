@@ -14,8 +14,18 @@
 #include <string>
 #include <fstream>
 #include <iomanip>
+#include <vector>
+#include <algorithm>
 
 using namespace std;
+
+#define kruskal_edge pair<int,int>
+#define kruskal_pair pair<int, kruskal_edge>
+
+struct Edge
+{
+    int v1,v2,weight;
+};
 
 struct ListElement
 {
@@ -30,7 +40,8 @@ private:
     int vertexes;
     int edges;
     ListElement *element;
-    ListElement **list_array;
+    ListElement **list_array_dir;
+    ListElement **list_array_undir;
     
 public:
     List(string filename);
@@ -38,6 +49,7 @@ public:
     ~List();
     void printList();
     void dijkstry(int start_vertex);
+    void kruskal();
     bool findVertex(int vertex_to_find);
 };
 
