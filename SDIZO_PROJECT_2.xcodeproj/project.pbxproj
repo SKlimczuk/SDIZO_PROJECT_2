@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F55A79B20C14A2100BA6CE2 /* Queue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F55A79920C14A2100BA6CE2 /* Queue.cpp */; };
+		2F55A79E20C14C4000BA6CE2 /* MSTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F55A79C20C14C4000BA6CE2 /* MSTree.cpp */; };
 		2F6D6FC820A1ECC800FE2356 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F6D6FC720A1ECC800FE2356 /* main.cpp */; };
 		2F6D6FD320A1F06900FE2356 /* Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F6D6FD120A1F06900FE2356 /* Matrix.cpp */; };
 		2F6D6FD720A1F0E300FE2356 /* List.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2F6D6FD520A1F0E300FE2356 /* List.cpp */; };
@@ -25,6 +27,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2F55A79920C14A2100BA6CE2 /* Queue.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Queue.cpp; sourceTree = "<group>"; };
+		2F55A79A20C14A2100BA6CE2 /* Queue.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Queue.hpp; sourceTree = "<group>"; };
+		2F55A79C20C14C4000BA6CE2 /* MSTree.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MSTree.cpp; sourceTree = "<group>"; };
+		2F55A79D20C14C4000BA6CE2 /* MSTree.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MSTree.hpp; sourceTree = "<group>"; };
+		2F55A79F20C15CF200BA6CE2 /* Edge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Edge.h; sourceTree = "<group>"; };
 		2F6D6FC420A1ECC800FE2356 /* SDIZO_PROJECT_2 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SDIZO_PROJECT_2; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F6D6FC720A1ECC800FE2356 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		2F6D6FD120A1F06900FE2356 /* Matrix.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Matrix.cpp; sourceTree = "<group>"; };
@@ -68,6 +75,11 @@
 				2F6D6FD620A1F0E300FE2356 /* List.hpp */,
 				2F6D6FD120A1F06900FE2356 /* Matrix.cpp */,
 				2F6D6FD220A1F06900FE2356 /* Matrix.hpp */,
+				2F55A79920C14A2100BA6CE2 /* Queue.cpp */,
+				2F55A79A20C14A2100BA6CE2 /* Queue.hpp */,
+				2F55A79C20C14C4000BA6CE2 /* MSTree.cpp */,
+				2F55A79D20C14C4000BA6CE2 /* MSTree.hpp */,
+				2F55A79F20C15CF200BA6CE2 /* Edge.h */,
 			);
 			path = SDIZO_PROJECT_2;
 			sourceTree = "<group>";
@@ -128,9 +140,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F55A79E20C14C4000BA6CE2 /* MSTree.cpp in Sources */,
 				2F6D6FD720A1F0E300FE2356 /* List.cpp in Sources */,
 				2F6D6FD320A1F06900FE2356 /* Matrix.cpp in Sources */,
 				2F6D6FC820A1ECC800FE2356 /* main.cpp in Sources */,
+				2F55A79B20C14A2100BA6CE2 /* Queue.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

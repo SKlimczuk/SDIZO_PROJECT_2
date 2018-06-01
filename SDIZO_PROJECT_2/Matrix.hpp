@@ -14,6 +14,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include "Edge.h"
 
 using namespace std;
 
@@ -31,6 +32,7 @@ public:
     ~Matrix();
     void printMatrix();
     void dijkstry(int start_vertex);
+    bool findVertex(int vertex_to_find);
 };
 
 #endif /* Matrix_hpp */

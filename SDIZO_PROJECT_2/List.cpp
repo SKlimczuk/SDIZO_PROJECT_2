@@ -8,8 +8,11 @@
 
 #include "List.hpp"
 
+
 List::List(string filename)
 {
+    //this->mst_weight = 0;
+    
     ifstream file;
     file.open(filename.c_str());
     
@@ -29,11 +32,25 @@ List::List(string filename)
         {
             int start_vertex, end_vertex, weight_edge;
             file >> start_vertex >> end_vertex >> weight_edge;
+           
+            //skierowany
             element = new ListElement;
             element->weight = weight_edge;
             element->vertex = end_vertex;
             element->next = list_array_dir[start_vertex];
             list_array_dir[start_vertex] = element;
+            /*
+            //nieskierowany
+            element = new ListElement;
+            element->weight = weight_edge;
+            element->vertex = end_vertex;
+            element->next = list_array_undir[start_vertex];
+            list_array_undir[start_vertex] = element;
+            element = new ListElement;
+            element->weight = weight_edge;
+            element->vertex = start_vertex;
+            element->next = list_array_undir[end_vertex];
+            list_array_undir[end_vertex] = element;*/
         }
         
         file.close();
@@ -61,6 +78,7 @@ List::~List()
 
 void List::printList()
 {
+    cout << "----- GRAF SKIEROWANY -----" << endl;
     for(int i=0; i<vertexes; i++)
     {
         cout << i << " -> ";
@@ -72,6 +90,23 @@ void List::printList()
         }
         cout << endl;
     }
+    /*cout << "----- GRAF NIESKIEROWANY -----" << endl;
+    for(int i=0; i<vertexes; i++)
+    {
+        cout << i << " -> ";
+        element = list_array_undir[i];
+        while (element)
+        {
+            cout << setw(4) << element->vertex << "(" << element -> weight << ")";
+            element = element->next;
+        }
+        cout << endl;
+     }*/
+}
+
+void List::randomList(int num_of_vertex)
+{
+    
 }
 
 void List::dijkstry(int start_vertex)
@@ -131,28 +166,61 @@ void List::dijkstry(int start_vertex)
     delete[] stack_array;
 }
 
-void List::kruskal()
+void List::prim()
 {
-    vector<Edge> edges_vec;
+    ListElement *temp;
+    Edge edge;
+    Node *node;
+    Queue queue(edges);
+    MSTree mst(vertexes);
+    MSTree graph(vertexes);
+    bool *visited = new bool[vertexes];
+    
     for(int i=0; i<vertexes; i++)
-    {
-        auto temp_element = list_array_dir[i];
-        while(temp_element)
+        visited[i] = false;
+    
+    for(int i=0; i<vertexes; i++)
+        for(temp = list_array_dir[i]; temp; temp=temp->next)
         {
-            Edge e;
-            e.v1= i;
-            e.v2 = temp_element->vertex;
-            e.weight = temp_element-> weight;
-            edges_vec.push_back(e);
-            temp_element = temp_element->next;
+            edge.v1 = i;
+            edge.v2 = temp->vertex;
+            edge.weight = temp->weight;
+            graph.addEdge(edge);
         }
+    
+    int v = 0;
+    visited[v] = true;
+    
+    for(int i=1; i<vertexes; i++)
+    {
+        
+        for(node = graph.getGraph(v); node; node = node->next)
+            if(!visited[node->vertex])
+            {
+                edge.v1 = v;
+                edge.v2 = node->vertex;
+                edge.weight = node -> weight;
+                queue.push(edge);
+                cout << edge.v1 << " " << edge.v2 << " " << edge.weight << endl;
+            }
+       
+        
+        do
+        {
+            edge = queue.front();
+            queue.pop();
+            
+        } while(visited[edge.v2]);
+        
+        mst.addEdge(edge);
+        visited[edge.v2] = true;
+        v = edge.v2;
+        
     }
     
-    //sort(edges_vec.begin(), edges_vec.end());
+    mst.printMST();
     
-    for(int i=0;i<edges_vec.size();i++)
-        cout << edges_vec[i].v1 << " " << edges_vec[i].v2 << " " << edges_vec[i].weight << endl;
-    
+    delete []visited;
 }
 
 bool List::findVertex(int vertex_to_find)

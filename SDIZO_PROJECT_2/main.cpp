@@ -53,7 +53,10 @@ int main(int argc, const char * argv[]) {
                             break;
                         case 2:
                             //generowanie losowych danych
-                            
+                            //int num_of_vertex;
+                            //cout << "Podaj ilosc wiercholkow: ";
+                            //cin >> num_of_vertex;
+                            //list->randomList(num_of_vertex);
                             break;
                         case 3:
                             //wyswietlanie listy sąsiedztwa
@@ -70,8 +73,8 @@ int main(int argc, const char * argv[]) {
                                 cout << "wierzcholek nie nalezy do grafu" << endl;
                             break;
                         case 5:
-                            //kruskal
-                            list->kruskal();
+                            //prim
+                            list->prim();
                             break;
                         case 0:
                             //powrot
@@ -108,10 +111,13 @@ int main(int argc, const char * argv[]) {
                             break;
                         case 4:
                             //dijkstry
-                            //int start_vertex;
-                            //cout << "podaj wierzcholek startowy ";
-                            //cin >> start_vertex;
-                            matrix->dijkstry(0);
+                            int start_vertex;
+                            cout << "podaj wierzcholek startowy ";
+                            cin >> start_vertex;
+                            if(matrix->findVertex(start_vertex))
+                                matrix->dijkstry(start_vertex);
+                            else
+                                cout << "wierzcholek nie nalezy do grafu" << endl;
                             break;
                         case 5:
                             //alg 2

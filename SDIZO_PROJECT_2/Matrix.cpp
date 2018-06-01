@@ -108,13 +108,6 @@ void Matrix::dijkstry(int start_vertex)
                 u = j;
         
         QS_array[u] = true;
-        /*
-        for(temp = list_array_dir[u]; temp; temp=temp->next)
-            if(!QS_array[temp->vertex] && (cost_array[temp->vertex] > cost_array[u] + temp->weight))
-            {
-                cost_array[temp->vertex] = cost_array[u] + temp->weight;
-                prev_array[temp->vertex] = u;
-            }*/
         for(int i=0; i<edges; i++)
             if(matrix_array[u][i] > 0)
                 for(int k=0; k<vertexes; k++)
@@ -147,4 +140,13 @@ void Matrix::dijkstry(int start_vertex)
     delete[] cost_array;
     delete[] QS_array;
     delete[] stack_array;
+}
+
+bool Matrix::findVertex(int vertex_to_find)
+{
+    for(int i=0;i<vertexes;i++)
+        if(vertex_to_find == i)
+            return true;
+    return false;
+    
 }
