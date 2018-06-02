@@ -9,6 +9,8 @@
 #include <iostream>
 #include <cstdlib>
 #include <fstream>
+#include <stdlib.h>
+#include <time.h>
 
 #include "Matrix.hpp"
 #include "List.hpp"
@@ -26,7 +28,7 @@ int main(int argc, const char * argv[]) {
     bool menu_cond_2 = true;
     string filename;
     
-    string menu_1 = "1 -> wczytaj z pliku\n2 -> generuj losowo\n3 -> wyswietl\n4 -> algorytm dijkstry\n5 -> alg 2\n0 -> powrot";
+    string menu_1 = "1 -> wczytaj z pliku\n2 -> generuj losowo\n3 -> wyswietl\n4 -> algorytm Dijkstry\n5 -> algorytm Prima\n0 -> powrot";
     
     do
     {
@@ -53,10 +55,18 @@ int main(int argc, const char * argv[]) {
                             break;
                         case 2:
                             //generowanie losowych danych
-                            //int num_of_vertex;
-                            //cout << "Podaj ilosc wiercholkow: ";
-                            //cin >> num_of_vertex;
-                            //list->randomList(num_of_vertex);
+                            int num_of_vertex;
+                            float density;
+                            cout << "Podaj ilosc wiercholkow: ";
+                            cin >> num_of_vertex;
+                            cout << "Podaj stopien gestosci grafu (0,1> : ";
+                            cin >> density;
+                            if(density > 0 && density <= 1)
+                            {
+                                list->fillRandom(num_of_vertex, density);
+                            }
+                            else
+                                cout << "niepoprawny stopien gestosci grafu" << endl;
                             break;
                         case 3:
                             //wyswietlanie listy sąsiedztwa
@@ -120,8 +130,8 @@ int main(int argc, const char * argv[]) {
                                 cout << "wierzcholek nie nalezy do grafu" << endl;
                             break;
                         case 5:
-                            //alg 2
-                            
+                            //prim
+                            matrix->prim();
                             break;
                         case 0:
                             //powrot

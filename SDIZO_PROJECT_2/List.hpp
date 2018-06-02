@@ -15,6 +15,8 @@
 #include <fstream>
 #include <iomanip>
 #include <algorithm>
+#include <stdlib.h>
+#include <time.h>
 
 #include "Edge.h"
 #include "Queue.hpp"
@@ -34,8 +36,6 @@ class List
 private:
     int vertexes;
     int edges;
-    //int length_of_array;
-    //int mst_weight;
     ListElement *element;
     ListElement **list_array_dir;
     ListElement **list_array_undir;
@@ -44,7 +44,7 @@ public:
     List(string filename);
     List(int v, int e);
     ~List();
-    void randomList(int num_of_vertex);
+    void fillRandom(int num_of_vertexes, float density);
     void printList();
     void dijkstry(int start_vertex);
     void prim();

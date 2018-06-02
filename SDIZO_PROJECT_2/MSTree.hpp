@@ -30,15 +30,21 @@ struct Node
 class MSTree
 {
 private:
-    Node **graph;
+    Node **graph_list;
+    int **graph_matrix;
     int length;
     int weight;
+    int counter;
 public:
     MSTree(int num_of_vertexes);
+    MSTree(int num_of_vertexes, int num_of_edges);
     ~MSTree();
-    void addEdge(Edge e);
-    Node *getGraph(int position);
-    void printMST();
+    void addListEdge(Edge e);
+    void addMatrixEdge(Edge e);
+    Node *getListGraph(int position);
+    int *getMatrixGraph(int position);
+    void printListMST();
+    void printMatrixMST();
 };
 
 #endif /* MSTree_hpp */

@@ -39,7 +39,7 @@ List::List(string filename)
             element->vertex = end_vertex;
             element->next = list_array_dir[start_vertex];
             list_array_dir[start_vertex] = element;
-            /*
+            
             //nieskierowany
             element = new ListElement;
             element->weight = weight_edge;
@@ -50,7 +50,7 @@ List::List(string filename)
             element->weight = weight_edge;
             element->vertex = start_vertex;
             element->next = list_array_undir[end_vertex];
-            list_array_undir[end_vertex] = element;*/
+            list_array_undir[end_vertex] = element;
         }
         
         file.close();
@@ -74,6 +74,19 @@ List::~List()
         }
     }
     delete[] list_array_dir;
+    
+    ListElement *temp3, *temp4;
+    for(int i = 0; i < vertexes; i++)
+    {
+        temp3 = list_array_undir[i];
+        while(temp3)
+        {
+            temp4 = temp3;
+            temp3 = temp3->next;
+            delete temp4;
+        }
+    }
+    delete[] list_array_undir;
 }
 
 void List::printList()
@@ -104,9 +117,28 @@ void List::printList()
      }*/
 }
 
-void List::randomList(int num_of_vertex)
+void List::fillRandom(int num_of_vertexes, float density)
 {
-    
+    int num_of_edges = density*(num_of_vertexes*(num_of_vertexes-1));
+    cout << "ilosc krawedzi: " << num_of_edges << endl;
+    fstream file;
+    file.open("random.txt", ios::out | ios::trunc);
+    if(file.good())
+    {
+        file << num_of_edges << " " << num_of_vertexes << endl;
+        for(int i=0; i<num_of_edges; i++)
+        {
+            int v1 = rand()%num_of_vertexes;
+            int v2 = rand()%num_of_vertexes;
+            while(v1 == v2)
+                 v2 = rand()%num_of_edges;
+            int w = rand()%20+1;
+            file << v1 << " " << v2 << " " << w << endl;
+        }
+        file.close();
+    }
+    else
+        cout << "blad przy obsludze pliku" << endl;
 }
 
 void List::dijkstry(int start_vertex)
@@ -185,7 +217,7 @@ void List::prim()
             edge.v1 = i;
             edge.v2 = temp->vertex;
             edge.weight = temp->weight;
-            graph.addEdge(edge);
+            graph.addListEdge(edge);
         }
     
     int v = 0;
@@ -193,32 +225,28 @@ void List::prim()
     
     for(int i=1; i<vertexes; i++)
     {
-        
-        for(node = graph.getGraph(v); node; node = node->next)
+        for(node = graph.getListGraph(v); node; node = node->next)
             if(!visited[node->vertex])
             {
                 edge.v1 = v;
                 edge.v2 = node->vertex;
                 edge.weight = node -> weight;
-                queue.push(edge);
                 cout << edge.v1 << " " << edge.v2 << " " << edge.weight << endl;
+                queue.push(edge);
             }
        
-        
-        do
-        {
+        do {
             edge = queue.front();
             queue.pop();
             
         } while(visited[edge.v2]);
         
-        mst.addEdge(edge);
+        mst.addListEdge(edge);
         visited[edge.v2] = true;
         v = edge.v2;
-        
     }
     
-    mst.printMST();
+    mst.printListMST();
     
     delete []visited;
 }

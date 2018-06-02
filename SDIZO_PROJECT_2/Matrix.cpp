@@ -20,13 +20,21 @@ Matrix::Matrix(string filename)
         cout << "Plik zostal otwarty poprawnie !" << endl;
         file >> this->edges >> this->vertexes;
         this->matrix_array = new int *[edges];
+        this->matrix_array_undir = new int *[edges];
         
         for(int i=0;i<vertexes;i++)
+        {
             matrix_array[i] = new int[edges];
+            matrix_array_undir[i] = new int[edges];
+        }
         
         for(int i=0;i<vertexes;i++)
             for(int k=0;k<edges;k++)
+            {
                 matrix_array[i][k] = 0;
+                matrix_array_undir[i][k] = 0;
+            }
+            
         
         for(int i=0;i<edges;i++)
         {
@@ -36,6 +44,9 @@ Matrix::Matrix(string filename)
             file >> start_vertex >> end_vertex >> weight_edge;
             matrix_array[start_vertex][i] = weight_edge;
             matrix_array[end_vertex][i] = -1;
+            
+            matrix_array_undir[start_vertex][i] = weight_edge;
+            matrix_array_undir[end_vertex][i] = weight_edge;
         }
         file.close();
     }
@@ -60,10 +71,39 @@ Matrix::~Matrix()
     for(int i = 0; i < vertexes; i++)
         delete [] matrix_array[i];
     delete [] matrix_array;
+    
+    for(int i = 0; i < vertexes; i++)
+        delete [] matrix_array_undir[i];
+    delete [] matrix_array_undir;
+}
+
+void Matrix::fillRandom(int num_of_vertexes, float density)
+{
+    int num_of_edges = density*(num_of_vertexes*(num_of_vertexes-1));
+    cout << "ilosc krawedzi: " << num_of_edges << endl;
+    fstream file;
+    file.open("random.txt", ios::out | ios::trunc);
+    if(file.good())
+    {
+        file << num_of_edges << " " << num_of_vertexes << endl;
+        for(int i=0; i<num_of_edges; i++)
+        {
+            int v1 = rand()%num_of_vertexes;
+            int v2 = rand()%num_of_vertexes;
+            while(v1 == v2)
+                v2 = rand()%num_of_edges;
+            int w = rand()%20+1;
+            file << v1 << " " << v2 << " " << w << endl;
+        }
+        file.close();
+    }
+    else
+        cout << "blad przy obsludze pliku" << endl;
 }
 
 void Matrix::printMatrix()
 {
+    cout << "----- graf skierowany" << endl;
     cout << endl;
     
     cout << "    ";
@@ -79,6 +119,23 @@ void Matrix::printMatrix()
             cout << setw(4) << matrix_array[i][k];
         cout << endl;
     }
+   
+    cout << "----- graf nieskierowany" << endl;
+    cout << endl;
+    
+    cout << "    ";
+    for(int i=0;i<edges;i++)
+        cout << setw(4) << i;
+    
+    cout << endl;
+    
+    for(int i=0;i<vertexes;i++)
+    {
+        cout << setw(4) << i;
+        for(int k=0;k<edges;k++)
+            cout << setw(4) << matrix_array_undir[i][k];
+        cout << endl;
+    }
 }
 
 void Matrix::dijkstry(int start_vertex)
@@ -88,7 +145,6 @@ void Matrix::dijkstry(int start_vertex)
     int *stack_array = new int[vertexes];
     int sptr = 0;
     bool *QS_array = new bool[vertexes];
-    int *temp;
     
     int u, j;
     
@@ -140,6 +196,68 @@ void Matrix::dijkstry(int start_vertex)
     delete[] cost_array;
     delete[] QS_array;
     delete[] stack_array;
+}
+
+void Matrix::prim()
+{
+    Edge edge;
+    Queue queue(edges);
+    MSTree mst(vertexes,edges);
+    MSTree graph(vertexes,edges);
+    bool *visited = new bool[vertexes];
+    
+    for(int i=0; i<vertexes; i++)
+        visited[i] = false;
+    
+    
+    for(int i=0; i<edges; i++)
+        for(int k=0; k<vertexes; k++)
+        {
+            if(matrix_array[k][i] > 0)
+            {
+                edge.v1 = k;
+                edge.weight = matrix_array[k][i];
+            }
+            if(matrix_array[k][i] == (-1))
+            {
+                edge.v2 = k;
+                graph.addMatrixEdge(edge);
+            }
+        }
+    
+    
+    int v = 0;
+    visited[v] = true;
+    
+    for(int i=1; i<vertexes; i++)
+    {
+        for(int j=0; j<edges; j++)
+            if(matrix_array_undir[v][j] > 0)
+                for(int k=0; k<vertexes; k++)
+                    if(matrix_array_undir[k][j] > 0)
+                        if(!visited[k])
+                        {
+                            edge.v1 = v;
+                            edge.v2 = k;
+                            edge.weight = matrix_array_undir[v][j];
+                            queue.push(edge);
+                            
+                            cout << edge.v1 << " " << edge.v2 << " " << edge.weight << endl;
+                        }
+    
+        do {
+            edge = queue.front();
+            queue.pop();
+        } while(visited[edge.v2]);
+        
+        mst.addMatrixEdge(edge);
+        visited[edge.v2] = true;
+        v = edge.v2;
+    }
+    
+    mst.printMatrixMST();
+    
+    delete []visited;
 }
 
 bool Matrix::findVertex(int vertex_to_find)

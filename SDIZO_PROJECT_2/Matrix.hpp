@@ -14,7 +14,12 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <stdlib.h>
+#include <time.h>
+
 #include "Edge.h"
+#include "Queue.hpp"
+#include "MSTree.hpp"
 
 using namespace std;
 
@@ -25,13 +30,16 @@ private:
     int edges;
     int weight;
     int ** matrix_array;
+    int ** matrix_array_undir;
     
 public:
     Matrix(string filename);
     Matrix(int v, int e);
     ~Matrix();
+    void fillRandom(int num_of_vertexes, float density);
     void printMatrix();
     void dijkstry(int start_vertex);
+    void prim();
     bool findVertex(int vertex_to_find);
 };
 
