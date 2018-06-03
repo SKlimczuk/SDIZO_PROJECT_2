@@ -126,15 +126,16 @@ void List::fillRandom(int num_of_vertexes, float density)
     if(file.good())
     {
         file << num_of_edges << " " << num_of_vertexes << endl;
-        for(int i=0; i<num_of_edges; i++)
-        {
-            int v1 = rand()%num_of_vertexes;
-            int v2 = rand()%num_of_vertexes;
-            while(v1 == v2)
-                 v2 = rand()%num_of_edges;
-            int w = rand()%20+1;
-            file << v1 << " " << v2 << " " << w << endl;
-        }
+        for(int i=0; i<num_of_edges/num_of_vertexes; i++)
+            for(int k=0; k<num_of_vertexes; k++)
+            {
+                int v1 = k;
+                int v2 = rand()%num_of_vertexes;
+                while(v1 == v2)
+                    v2 = rand()%num_of_vertexes;
+                int w = rand()%20+1;
+                file << v1 << " " << v2 << " " << w << endl;
+            }
         file.close();
     }
     else
@@ -231,14 +232,12 @@ void List::prim()
                 edge.v1 = v;
                 edge.v2 = node->vertex;
                 edge.weight = node -> weight;
-                cout << edge.v1 << " " << edge.v2 << " " << edge.weight << endl;
                 queue.push(edge);
             }
        
         do {
             edge = queue.front();
             queue.pop();
-            
         } while(visited[edge.v2]);
         
         mst.addListEdge(edge);

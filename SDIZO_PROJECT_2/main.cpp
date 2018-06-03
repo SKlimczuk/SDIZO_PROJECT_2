@@ -113,7 +113,18 @@ int main(int argc, const char * argv[]) {
                             break;
                         case 2:
                             //generowanie losowych danych
-                            
+                            int num_of_vertex;
+                            float density;
+                            cout << "Podaj ilosc wiercholkow: ";
+                            cin >> num_of_vertex;
+                            cout << "Podaj stopien gestosci grafu (0,1> : ";
+                            cin >> density;
+                            if(density > 0 && density <= 1)
+                            {
+                                matrix->fillRandom(num_of_vertex, density);
+                            }
+                            else
+                                cout << "niepoprawny stopien gestosci grafu" << endl;
                             break;
                         case 3:
                             //wyswietlanie macierzy incydencji
