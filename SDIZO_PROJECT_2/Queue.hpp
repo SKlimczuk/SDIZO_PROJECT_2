@@ -20,7 +20,7 @@ class Queue
 {
 private:
     Edge *heap;
-    int hpos; // nie wiem jeszcze co to
+    int hpos; 
 public:
     Queue(int num_of_vertexes);
     ~Queue();

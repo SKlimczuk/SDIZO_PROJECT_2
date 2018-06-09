@@ -17,6 +17,7 @@
 #include <algorithm>
 #include <stdlib.h>
 #include <time.h>
+#include <chrono>
 
 #include "Edge.h"
 #include "Queue.hpp"

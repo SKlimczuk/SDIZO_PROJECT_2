@@ -11,8 +11,6 @@
 
 List::List(string filename)
 {
-    //this->mst_weight = 0;
-    
     ifstream file;
     file.open(filename.c_str());
     
@@ -103,18 +101,6 @@ void List::printList()
         }
         cout << endl;
     }
-    /*cout << "----- GRAF NIESKIEROWANY -----" << endl;
-    for(int i=0; i<vertexes; i++)
-    {
-        cout << i << " -> ";
-        element = list_array_undir[i];
-        while (element)
-        {
-            cout << setw(4) << element->vertex << "(" << element -> weight << ")";
-            element = element->next;
-        }
-        cout << endl;
-     }*/
 }
 
 void List::fillRandom(int num_of_vertexes, float density)
@@ -147,11 +133,13 @@ void List::dijkstry(int start_vertex)
     int *cost_array = new int[vertexes];
     int *prev_array = new int[vertexes];
     int *stack_array = new int[vertexes];
-    int sptr = 0;
     bool *QS_array = new bool[vertexes];
+    int sptr = 0;
     ListElement *temp;
     
     int u, j;
+    
+    auto start = chrono::system_clock::now();
     
     for(int i=0; i<vertexes; i++)
     {
@@ -178,6 +166,10 @@ void List::dijkstry(int start_vertex)
                 prev_array[temp->vertex] = u;
             }
     }
+    
+    auto end = chrono::system_clock::now();
+    chrono::duration<double, milli> elapsed_miliseconds = end-start;
+    std::cout << "CZAS DZIALANIA ALGORYTMU : " << elapsed_miliseconds.count() << " [ms]" << endl;
     
     //wyswietlanie wynikow
     for(int i=0; i<vertexes;i++)
@@ -208,6 +200,8 @@ void List::prim()
     MSTree mst(vertexes);
     MSTree graph(vertexes);
     bool *visited = new bool[vertexes];
+    
+    auto start = chrono::system_clock::now();
     
     for(int i=0; i<vertexes; i++)
         visited[i] = false;
@@ -244,6 +238,10 @@ void List::prim()
         visited[edge.v2] = true;
         v = edge.v2;
     }
+    
+    auto end = chrono::system_clock::now();
+    chrono::duration<double, milli> elapsed_miliseconds = end-start;
+    std::cout << "CZAS DZIALANIA ALGORYTMU : " << elapsed_miliseconds.count() << " [ms]" << endl;
     
     mst.printListMST();
     

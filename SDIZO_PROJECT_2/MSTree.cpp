@@ -34,7 +34,7 @@ MSTree::MSTree(int num_of_vertexes,int num_of_edges)
 
 MSTree::~MSTree()
 {
-    if(getListGraph(0) != nullptr)
+    /*if(getListGraph(0) != nullptr)
     {
         Node *p,*r;
         for(int i = 0; i <= length; i++)
@@ -49,12 +49,12 @@ MSTree::~MSTree()
         }
         delete [] graph_list;
     }
-    else
+    *//*
     {
         for(int i = 0; i <= length; i++)
             delete [] graph_matrix[i];
         delete [] graph_matrix;
-    }
+    }*/
 }
 
 void MSTree::addListEdge(Edge e)

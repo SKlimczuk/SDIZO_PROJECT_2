@@ -151,6 +151,8 @@ void Matrix::dijkstry(int start_vertex)
     
     int u, j;
     
+    auto start = chrono::system_clock::now();
+    
     for(int i=0; i<vertexes; i++)
     {
         cost_array[i] = 1000000;
@@ -180,6 +182,10 @@ void Matrix::dijkstry(int start_vertex)
         
     }
     
+    auto end = chrono::system_clock::now();
+    chrono::duration<double, milli> elapsed_miliseconds = end-start;
+    std::cout << "CZAS DZIALANIA ALGORYTMU : " << elapsed_miliseconds.count() << " [ms]" << endl;
+    
     //wyswietlanie wynikow
     for(int i=0; i<vertexes;i++)
     {
@@ -207,6 +213,8 @@ void Matrix::prim()
     MSTree mst(vertexes,edges);
     MSTree graph(vertexes,edges);
     bool *visited = new bool[vertexes];
+    
+    auto start = chrono::system_clock::now();
     
     for(int i=0; i<vertexes; i++)
         visited[i] = false;
@@ -253,6 +261,10 @@ void Matrix::prim()
         visited[edge.v2] = true;
         v = edge.v2;
     }
+    
+    auto end = chrono::system_clock::now();
+    chrono::duration<double, milli> elapsed_miliseconds = end-start;
+    std::cout << "CZAS DZIALANIA ALGORYTMU : " << elapsed_miliseconds.count() << " [ms]" << endl;
     
     mst.printMatrixMST();
     

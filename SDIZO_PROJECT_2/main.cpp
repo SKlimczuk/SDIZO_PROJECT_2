@@ -67,7 +67,7 @@ int main(int argc, const char * argv[]) {
                             }
                             else
                                 cout << "niepoprawny stopien gestosci grafu" << endl;
-                            break;
+                             break;
                         case 3:
                             //wyswietlanie listy sąsiedztwa
                             list->printList();
@@ -165,12 +165,3 @@ int main(int argc, const char * argv[]) {
     
     return 0;
 }
-
-
-/*
--------WYMAGANIA------------------------------------------------------------
- 1. REPREZENTACJA -> macierz incydencji, lista następników/poprzedników
- 2. ALGORYTMY -> prim/kruskal, belman/dijkstry
- ---------------
- 
-*/
